@@ -90,17 +90,6 @@ test_acc = np.mean((conv_m.predict_y(x_test)[0] > 0.5).numpy().astype("float") =
 print(f"Train acc: {train_acc * 100}%\nTest acc : {test_acc * 100}%")
 print("conv elbo after training: %.4e" % conv_elbo())
 
-res = gpflow.optimizers.Scipy().minimize(
-    conv_training_loss_closure,
-    variables=conv_m.trainable_variables,
-    method="l-bfgs-b",
-    options={"disp": True, "maxiter": MAXITER},
-)
-train_acc = np.mean((conv_m.predict_y(x_train)[0] > 0.5).numpy().astype("float") == y_train)
-test_acc = np.mean((conv_m.predict_y(x_test)[0] > 0.5).numpy().astype("float") == y_test)
-print(f"Train acc: {train_acc * 100}%\nTest acc : {test_acc * 100}%")
-print("conv elbo after training: %.4e" % conv_elbo())
-
 set_trainable(conv_m.kernel.weights, True)
 res = gpflow.optimizers.Scipy().minimize(
     conv_training_loss_closure,
