@@ -34,8 +34,6 @@ IMAGE_SHAPE = [H, W]
 for num in NUM_TRAIN_DATA:
     x_train = x_train[0:num]  # (n,28,28)
     y_train = y_train[0:num]  # (n,)
-    # x_test = x_test[0:NUM_TEST_DATA]
-    # y_test = y_test[0:NUM_TEST_DATA]
 
     # for gpflow function data and test_data
     x_train = x_train.reshape(num, -1).astype(np.float64)  # (n, 28*28)
@@ -67,15 +65,8 @@ for num in NUM_TRAIN_DATA:
     conv_training_loss_closure = conv_m.training_loss_closure(data, compile=True)
     conv_elbo = lambda: -conv_training_loss_closure().numpy()
     print("conv elbo before training: %.4e" % conv_elbo())
-
-    # start_time = time.time()
-    # res = gpflow.optimizers.Scipy().minimize(
-    #     conv_training_loss_closure,
-    #     variables=conv_m.trainable_variables,
-    #     method="l-bfgs-b",
-    #     options={"disp": True, "maxiter": MAXITER / 10},
-    # )
-    # print(f"{res.nfev / (time.time() - start_time):.3f} iter/s")
+    print("conv model summary before training:")
+    gpflow.utilities.print_summary(conv_m)
 
     print("TRAINING DATA SIZE IS %d" % num)
 
@@ -94,18 +85,5 @@ for num in NUM_TRAIN_DATA:
     print(f"Train acc: {train_acc * 100}%\nTest acc : {test_acc * 100}%")
     print("conv elbo after training: %.4e" % conv_elbo())
 
-    # # set weights as trainable
-    # set_trainable(conv_m.kernel.weights, True)
-    # res = gpflow.optimizers.Scipy().minimize(
-    #     conv_training_loss_closure,
-    #     variables=conv_m.trainable_variables,
-    #     method="l-bfgs-b",
-    #     options={"disp": True, "maxiter": MAXITER},
-    # )
-    # # results of training weights
-    # train_acc = np.mean((conv_m.predict_y(x_train)[0] > 0.5).numpy().astype("float") == y_train)
-    # test_acc = np.mean((conv_m.predict_y(x_test)[0] > 0.5).numpy().astype("float") == y_train)
-    # print(f"Train acc: {train_acc * 100}%\nTest acc : {test_acc * 100}%")
-    # print("conv elbo after training: %.4e" % conv_elbo())
-
+    print("conv model summary after training:")
     gpflow.utilities.print_summary(conv_m)
