@@ -50,8 +50,8 @@ for num in NUM_TRAIN_DATA:
     )
 
     patch_shape = [5, 5]
-    # base kernel, setting variance=1 and lengthschales=1 as a starting point
-    base_k = gpflow.kernels.SquaredExponential(variance=1., lengthscales=1.)
+    # base kernel
+    base_k = gpflow.kernels.SquaredExponential()
     # conv kernel by sum all the patches
     conv_k = gpflow.kernels.Convolutional(base_k, IMAGE_SHAPE, patch_shape)
     conv_k.weights = gpflow.Parameter(conv_k.weights.numpy(), transform=max_abs_1())
