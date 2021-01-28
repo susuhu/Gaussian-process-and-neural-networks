@@ -22,19 +22,20 @@ x_train, x_test = x_train / 255.0, x_test / 255.0
 #     plt.title("label: %d" % y_train[i])
 # plt.show()
 
-
 # set numbers
-NUM_TRAIN_DATA =np.array([60, 600, 6000, 60000])
+NUM_TRAIN_DATA = np.array([60, 600, 6000, 60000])
 NUM_TEST_DATA = x_test.shape[0]
-MAXITER = 1000
+MAXITER = 100
 H = W = 28  # width and height
 IMAGE_SHAPE = [H, W]
 patch_shape = [5, 5]
 
+
 # different training data size run
 for num in NUM_TRAIN_DATA:
-    x_train = x_train[0: num]  # (n,28,28)
-    y_train = y_train[0: num]  # (n,)
+    TRAINING_NUM = num
+    x_train = x_train[0:num]  # (n,28,28)
+    y_train = y_train[0:num]  # (n,)
 
     # for gpflow function data and test_data
     x_train = x_train.reshape(num, -1).astype(np.float64)  # (n, 28*28)
@@ -67,7 +68,9 @@ for num in NUM_TRAIN_DATA:
     )
 
     # sparse variance Gaussian Process num_data=minibatch
-    conv_m = gpflow.models.SVGP(conv_k, gpflow.likelihoods.MultiClass(10), conv_f, num_latent_gps=10)
+    conv_m = gpflow.models.SVGP(
+        conv_k, gpflow.likelihoods.MultiClass(10), conv_f, num_latent_gps=10
+    )
 
     conv_training_loss_closure = conv_m.training_loss_closure(data, compile=True)
     conv_elbo = conv_m.elbo(data)
@@ -75,11 +78,15 @@ for num in NUM_TRAIN_DATA:
     print("conv model summary before training:")
     gpflow.utilities.print_summary(conv_m)
 
-    print("TRAINING DATA SIZE IS %d" % num)
+    print("------------ TRAINING DATA SIZE IS %d -------------" % num)
 
     # set variance, lengthscale, weight as trainable parameters
-    set_trainable(conv_m.kernel.base_kernel.variance, True)  # SquaredExponential variance
-    set_trainable(conv_m.kernel.base_kernel.lengthscales, True)  # SquaredExponential lengthscales
+    set_trainable(
+        conv_m.kernel.base_kernel.variance, True
+    )  # SquaredExponential variance
+    set_trainable(
+        conv_m.kernel.base_kernel.lengthscales, True
+    )  # SquaredExponential lengthscales
     set_trainable(conv_m.kernel.weights, True)  # conv kernel weights
     res = gpflow.optimizers.Scipy().minimize(
         conv_training_loss_closure,
@@ -90,9 +97,15 @@ for num in NUM_TRAIN_DATA:
 
     # results of training variance
     # conv_m.predict_y(x_train)[0] = mean, conv_m.predict_y(x_train)[1] = variance
-    train_acc = np.mean((conv_m.predict_y(x_train)[0] > 0.5).numpy().astype("float") == y_train)
-    test_acc = np.mean((conv_m.predict_y(x_test)[0] > 0.5).numpy().astype("float") == y_test)
-    print(f"Train acc: {train_acc * 100}%\nTest acc : {test_acc * 100}%")
+    train_acc = np.mean(
+        (conv_m.predict_y(x_train)[0] > 0.5).numpy().astype("float") == y_train
+    )
+    test_acc = np.mean(
+        (conv_m.predict_y(x_test)[0] > 0.5).numpy().astype("float") == y_test
+    )
+    print(
+        f"Train acc: {train_acc * 100}%\nTest acc : {test_acc * 100}% with sample size: {TRAINING_NUM}"
+    )
     print("conv elbo after training: %.4e" % conv_elbo())
 
     print("conv model summary after training:")
