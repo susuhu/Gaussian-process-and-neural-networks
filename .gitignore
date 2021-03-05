@@ -1,3 +1,6 @@
 tf
 .idea
 __pycache__
+temptest.py
+convgp-test.py
+patches.py

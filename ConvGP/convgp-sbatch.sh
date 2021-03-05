@@ -10,19 +10,19 @@
 #SBATCH -J "convgp-test"         # job name
 #SBATCH -A p_sp_hu  # credit to your project
 
-#SBATCH -o /scratch/ws/0/suhu478b-p_sp_hu/slurm-%j.out     # save output messages %j is job-id
-#SBATCH -e /scratch/ws/0/suhu478b-p_sp_hu/slurm-%j.err     # save error messages %j is job-id
+#SBATCH -o /scratch/ws/0/suhu478b-gpvenv/slurm-%j.out     # save output messages %j is job-id
+#SBATCH -e /scratch/ws/0/suhu478b-gpvenv/slurm-%j.err     # save error messages %j is job-id
 
 #SBATCH --mail-type=end# send email notification when job finished
 #SBATCH --mail-user=susu.hu@mailbox.tu-dresden.de
 
 export OMP_NUM_THREADS=$SLURM_CPUS_ON_NODE
 module load modenv/ml # loads the ml environment
-module load TensorFlow # loads the tensorflow module
+module load TensorFlow/2.3.1-fosscuda-2019b-Python-3.7.4 # loads the tensorflow module
 module load matplotlib
-module load gpflow
-module load tensorflow_probability
 
-python /projects/p_sp_hu/convgp-test.py
+source /scratch/ws/0/suhu478b-gpvenv/gpflow/bin/activate # Source python venv
+
+python /projects/p_sp_hu/GP_MNIST.py
 
 exit 0
