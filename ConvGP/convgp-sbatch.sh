@@ -19,10 +19,10 @@
 export OMP_NUM_THREADS=$SLURM_CPUS_ON_NODE
 module load modenv/ml # loads the ml environment
 module load TensorFlow/2.3.1-fosscuda-2019b-Python-3.7.4 # loads the tensorflow module
-module load matplotlib
+# module load matplotlib
 
-source /scratch/ws/0/suhu478b-gpvenv/gpflow/bin/activate # Source python venv
+source /scratch/ws/0/suhu478b-gpvenv/gpflow1/bin/activate # Source python venv
 
-python /projects/p_sp_hu/GP_MNIST.py
+python /scratch/ws/0/suhu478b-gpvenv/GP_MNIST.py
 
 exit 0
