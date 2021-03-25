@@ -5,3 +5,4 @@ ConvGP/__pycache__
 ConvGP/convgp-sbatch.sh
 __pycache__
 .DS_Store
+test.py
