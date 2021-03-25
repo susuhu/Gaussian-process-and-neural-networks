@@ -1,6 +1,7 @@
 tf
 .idea
-__pycache__
 temptest.py
-convgp-test.py
-patches.py
+ConvGP/__pycache__
+ConvGP/convgp-sbatch.sh
+__pycache__
+.DS_Store
