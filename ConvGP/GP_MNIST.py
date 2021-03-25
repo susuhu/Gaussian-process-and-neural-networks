@@ -10,8 +10,6 @@ import gpflow
 from gpflow.utilities import set_trainable, print_summary
 import matplotlib.pyplot as plt
 
-# import toy_image
-
 
 # plain GP model
 def rbf_model(base_k, data, MAXITER, n, num_class):
@@ -148,9 +146,6 @@ def main():
     # x_test = x_test[0:NUM_TEST_DATA]
     # y_test = y_test[0:NUM_TEST_DATA]
 
-    # # toy image data
-    # x_train, y_train = toy_image.make_rectangles_dataset(NUM_TRAIN_DATA, *IMAGE_SHAPE)
-    # x_test, y_test = toy_image.make_rectangles_dataset(NUM_TEST_DATA, *IMAGE_SHAPE)
 
     # process data for gpflow
     x_train = x_train.reshape(NUM_TRAIN_DATA, -1).astype(np.float64)  # (n, 28*28)
