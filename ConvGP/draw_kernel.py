@@ -45,25 +45,34 @@ ys4 = np.random.multivariate_normal(
 # %%
 # Plot the sampled functions
 plt.figure(figsize=(6, 4), dpi=100)
+
 # plt.suptitle('Squared exponentiated kernel with differnet parameters',fontsize=12)
 plt.subplots_adjust(hspace=0.5)
 plt.subplot(2,2,1)
+plt.xlim([-4, 4])
+plt.ylim([-3,3])
 for i in range(number_of_functions):
     plt.plot(X, ys1[i], linestyle='-',color ="darkblue")
     plt.title("σ =1.0, l =1.0",fontsize=10)
-# plt.xlim([-4, 4])
+
 
 plt.subplot(2,2,2)
+plt.xlim([-4, 4])
+plt.ylim([-3,3])
 for i in range(number_of_functions):
     plt.plot(X, ys2[i], linestyle='-',color ="darkred")
     plt.title("σ =1.0, l =0.5",fontsize=10)
 
 plt.subplot(2,2,3)
+plt.xlim([-4, 4])
+plt.ylim([-3,3])
 for i in range(number_of_functions):
     plt.plot(X, ys3[i], linestyle='-',color='darkgreen')
     plt.title("σ =0.5, l =1.0",fontsize=10)
 
 plt.subplot(2,2,4)
+plt.xlim([-4, 4])
+plt.ylim([-3,3])
 for i in range(number_of_functions):
     plt.plot(X, ys4[i], linestyle='-',color='orange')
     plt.title("σ =0.5, l =0.5",fontsize=10)
