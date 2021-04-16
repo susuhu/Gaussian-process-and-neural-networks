@@ -9,7 +9,7 @@ Variantional inference<br/>
 Optimization with Adam(1st derivate based) and L-BFGS-B(2nd derivative based) methods<br/>
 
 ### Environment
-tensorflow == 2.3
-tensorflow_probability == 0.11.1
-python == 3.8
+tensorflow == 2.3<br/>
+tensorflow_probability == 0.11.1<br/>
+python == 3.8<br/>
 gpflow == 2.1.4
