@@ -11,7 +11,7 @@ from gpflow.utilities import set_trainable, print_summary
 import matplotlib.pyplot as plt
 
 
-# plain GP model
+# GP model without convolutional structure
 def rbf_model(base_k, data, MAXITER, n, num_class):
     # inducing points
     idx = np.random.choice(data[0].shape[0], n, replace=False)
@@ -33,7 +33,7 @@ def rbf_model(base_k, data, MAXITER, n, num_class):
     return rbf_m1
 
 
-# convolutional GP model
+# GP model with convolutional structure
 def conv_model(conv_k, conv_f, data, num_class):
     # convolutional model
     conv_m1 = gpflow.models.SVGP(
@@ -52,6 +52,7 @@ def conv_model(conv_k, conv_f, data, num_class):
     return conv_m1
 
 
+# L-BFGS-B optimizer
 def run_lbfgs(model, MAXITER, data, M):
     training_loss = model.training_loss_closure(data, compile=True)
 
@@ -67,6 +68,7 @@ def run_lbfgs(model, MAXITER, data, M):
     return opt
 
 
+# Adam optimizer
 def run_adam(model, MAXITER, data):
     """
     Utility function running the Adam optimizer
@@ -92,6 +94,7 @@ def run_adam(model, MAXITER, data):
     return losses
 
 
+# Initialize inducing points/patches
 def my_inducing_points(x, n, base_k, IMAGE_SHAPE, PATCH_SHAPE):
     conv_k = gpflow.kernels.Convolutional(base_k, IMAGE_SHAPE, PATCH_SHAPE)
     patches = np.unique(conv_k.get_patches(x).numpy().reshape(-1, 81), axis=0)
@@ -102,6 +105,7 @@ def my_inducing_points(x, n, base_k, IMAGE_SHAPE, PATCH_SHAPE):
     return Z
 
 
+# Prediction
 def pred(model, x_train, y_train, x_test, y_test):
     predicted_train_mean, _ = model.predict_y(x_train)
     predicted_test_mean, _ = model.predict_y(x_test)
@@ -116,6 +120,7 @@ def pred(model, x_train, y_train, x_test, y_test):
     return train_acc, test_acc
 
 
+# Plot inducing patches
 def plot_patches(pat, n, PATCH_SHAPE):
     plt.figure(figsize=(5, 5))
     for i in range(n):
