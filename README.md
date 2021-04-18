@@ -1,6 +1,6 @@
 # Gaussian processes and neural networks
 
-Despite the success of deep learning in many application areas, neural networks lack of predictive uncertainty estimates. Gaussian processes, as a Bayesian non-parametric model provide the uncertainty quantification and full mathematical interpretation.
+Despite the success of deep learning in many application areas, neural networks lack of predictive uncertainty estimates. Gaussian processes, as a Bayesian non-parametric model provide the uncertainty quantification and full mathematical interpretation. But scabality remains the biggest challenge in Gaussian processes. Due to matrics inversion, the complexity is  ![equation](https://latex.codecogs.com/gif.latex?\fn_cm&space;\mathcal{O}&space;(N^3))
 
 ## Methodology
 Multiclass classification on MNIST dataset, w/o convolutional struture <br/>
