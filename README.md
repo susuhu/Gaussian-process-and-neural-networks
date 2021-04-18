@@ -13,3 +13,7 @@ tensorflow == 2.3<br/>
 tensorflow_probability == 0.11.1<br/>
 python == 3.8<br/>
 gpflow == 2.1.4
+
+
+##### Visualization of Gaussian processes on toy regression problem
+<img src="https://github.com/susuhu/Gaussian-process-and-neural-networks/blob/master/Results/GPRegression.png" width=60%>
