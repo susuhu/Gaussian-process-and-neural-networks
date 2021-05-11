@@ -17,5 +17,5 @@ gpflow == 2.1.4
 
 
 ##### Visualization of Gaussian processes on toy regression problem
-1D regression is the easiest problem to visualize Gaussian processes, but the idea generalizes to higher dimension and multiclass classification problem.
+1D regression is the easiest problem to visualize Gaussian processes, but the idea generalizes to higher dimension and multiclass classification problem.<br/>
 <img src="https://github.com/susuhu/Gaussian-process-and-neural-networks/blob/master/Results/GPRegression.png" width=60%>
